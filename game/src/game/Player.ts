@@ -1,23 +1,15 @@
-import { kBulletSize, kPlayerSize, kVisibleDistance } from "../utils/Constants";
+import { kBulletSize, kPlayerSize, kPlayerSpeed, kVisibleDistance } from "../utils/Constants";
 import { Map } from "./Map";
-
-export enum Direction {
-    Up,
-    Down,
-    Left,
-    Right
-}
+import { Direction } from "./Game";
 
 export class Player {
   x: number;
   y: number;
-  speed: number;
   direction: Direction;
 
-  constructor(x: number, y: number, speed: number) {
+  constructor(x: number, y: number) {
       this.x = x;
       this.y = y;
-      this.speed = speed;
       this.direction = Direction.Right;
   }
 
@@ -64,7 +56,7 @@ export class Player {
   }
 
   moveLeft(map: Map) {
-    let newX = this.x - this.speed;
+    let newX = this.x - kPlayerSpeed;
     if (this.canMove(newX, this.y, map)) {
         this.x = newX;
     }
@@ -72,7 +64,7 @@ export class Player {
   }
 
   moveRight(map: Map) {
-    let newX = this.x + this.speed;
+    let newX = this.x + kPlayerSpeed;
     if (this.canMove(newX, this.y, map)) {
         this.x = newX;
     }
@@ -80,7 +72,7 @@ export class Player {
   }
 
   moveUp(map: Map) {
-    let newY = this.y - this.speed;
+    let newY = this.y - kPlayerSpeed;
     if (this.canMove(this.x, newY, map)) {
         this.y = newY;
     }
@@ -88,7 +80,7 @@ export class Player {
   }
 
   moveDown(map: Map) {
-    let newY = this.y + this.speed;
+    let newY = this.y + kPlayerSpeed;
     if (this.canMove(this.x, newY, map)) {
         this.y = newY;
     }

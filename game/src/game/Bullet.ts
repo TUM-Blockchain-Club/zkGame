@@ -1,6 +1,6 @@
 import { kBulletSize } from '../utils/Constants';
 import { Map } from './Map';
-import { Direction } from './Player';
+import { Direction } from './Game';
 
 export class Bullet {
   x: number;

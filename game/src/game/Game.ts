@@ -1,28 +1,55 @@
 import map from '../../assets/map.json';
 import { Player } from './Player';
+import { Enemy } from './Enemy';
 import { Bullet } from './Bullet';
 import { Map } from './Map';
 import { handleKeyboardInput } from '../utils/Keyboard';
 import { kBulletMaxDistance, kGridSize } from '../utils/Constants';
 
+export enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
 export class Game {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     player: Player;
+    enemy: Enemy;
     bullets: Bullet[];
     map: Map;
+    private webSocket: WebSocket;
 
   constructor(canvasId: string) {
       this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
       this.ctx = this.canvas.getContext('2d')!;
       this.canvas.width = 800; // Set canvas width
       this.canvas.height = 600; // Set canvas height
-      this.player = new Player(100, 100, 20); // Starting position and speed of player
+      this.player = new Player(100, 100); // Starting position and speed of player
+      this.enemy = new Enemy(200, 200); // Starting position and speed of enemy
       this.bullets = []; // Array of bullets
       window.addEventListener('keydown', (e) => this.handleInput(e));
       this.map = Map.fromJson(map); // Create map from JSON
+      this.webSocket = new WebSocket('ws://localhost:8080');
+      this.setupWebSocket();
   }
 
+  private setupWebSocket() {
+    this.webSocket.onopen = (event) => {
+        console.log('Connected to WebSocket server');
+    };
+
+    this.webSocket.onmessage = (event) => {
+        console.log('Message from server:', event.data);
+        // Handle incoming messages
+    };
+
+    this.webSocket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+  }
 
   getCameraOffset() {
     let offsetX = Math.max(0, Math.min(this.player.x - this.canvas.width / 2, this.map.width * kGridSize - this.canvas.width));
