@@ -17,7 +17,7 @@ export class Game {
       this.ctx = this.canvas.getContext('2d')!;
       this.canvas.width = 800; // Set canvas width
       this.canvas.height = 600; // Set canvas height
-      this.player = new Player(100, 100, 20); // Starting position and speed of player
+      this.player = new Player(100, 100, 20, 1); // Starting position and speed of player
       this.bullets = []; // Array of bullets
       window.addEventListener('keydown', (e) => this.handleInput(e));
       this.map = Map.fromJson(map); // Create map from JSON

@@ -13,12 +13,14 @@ export class Player {
   y: number;
   speed: number;
   direction: Direction;
+  id: number;
 
-  constructor(x: number, y: number, speed: number) {
+  constructor(x: number, y: number, speed: number, id: number) {
       this.x = x;
       this.y = y;
       this.speed = speed;
       this.direction = Direction.Right;
+      this.id = id;
   }
 
   get bulletX() {
