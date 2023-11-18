@@ -44,6 +44,11 @@ export class Game {
     this.webSocket.onmessage = (event) => {
         console.log('Message from server:', event.data);
         // Handle incoming messages
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'playerUpdate') {
+            this.updateEnemyState(data);
+        }
     };
 
     this.webSocket.onerror = (error) => {
@@ -51,10 +56,11 @@ export class Game {
     };
   }
 
-  getCameraOffset() {
-    let offsetX = Math.max(0, Math.min(this.player.x - this.canvas.width / 2, this.map.width * kGridSize - this.canvas.width));
-    let offsetY = Math.max(0, Math.min(this.player.y - this.canvas.height / 2, this.map.height * kGridSize - this.canvas.height));
-    return { offsetX, offsetY };
+  updateEnemyState(data: any) {
+    // Update enemy state
+    this.enemy.x = data.data.x;
+    this.enemy.y = data.data.y;
+    this.enemy.direction = data.data.direction;
   }
 
   handleInput(event: KeyboardEvent) {
@@ -65,6 +71,24 @@ export class Game {
           // Remaining keyboard input (movement)
           handleKeyboardInput(event, this.map, this.player);
       }
+      // Send message to server
+      if (this.webSocket.readyState === WebSocket.OPEN) {
+          console.log('Sending message to server');
+          this.webSocket.send(JSON.stringify({
+              type: 'playerUpdate',
+              data: {
+                  x: this.player.x,
+                  y: this.player.y,
+                  direction: this.player.direction
+              }
+          }));
+      }
+  }
+
+  getCameraOffset() {
+    let offsetX = Math.max(0, Math.min(this.player.x - this.canvas.width / 2, this.map.width * kGridSize - this.canvas.width));
+    let offsetY = Math.max(0, Math.min(this.player.y - this.canvas.height / 2, this.map.height * kGridSize - this.canvas.height));
+    return { offsetX, offsetY };
   }
 
   update() {
@@ -79,6 +103,7 @@ export class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     // Draw player, bulltets, and map with offset
     this.player.draw(this.ctx, offsetX, offsetY);
+    this.enemy.draw(this.ctx, offsetX, offsetY);
     this.bullets.forEach(bullet => bullet.draw(this.ctx, offsetX, offsetY));
     this.map.draw(this.ctx, offsetX, offsetY);
   }
