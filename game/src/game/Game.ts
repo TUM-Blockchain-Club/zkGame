@@ -68,21 +68,22 @@ export class Game {
           // Fire a bullet
           this.bullets.push(new Bullet(this.player.bulletX, this.player.bulletY, 10, this.player.direction));
       } else {
-          // Remaining keyboard input (movement)
-          handleKeyboardInput(event, this.map, this.player);
+        // Remaining keyboard input (movement)
+        handleKeyboardInput(event, this.map, this.player);
+        // Send message to server
+        if (this.webSocket.readyState === WebSocket.OPEN) {
+            const msg = JSON.stringify({
+                type: 'playerUpdate',
+                data: {
+                    x: this.player.x,
+                    y: this.player.y,
+                    direction: this.player.direction
+                }
+            });
+            this.webSocket.send(msg);
+        }
       }
-      // Send message to server
-      if (this.webSocket.readyState === WebSocket.OPEN) {
-          console.log('Sending message to server');
-          this.webSocket.send(JSON.stringify({
-              type: 'playerUpdate',
-              data: {
-                  x: this.player.x,
-                  y: this.player.y,
-                  direction: this.player.direction
-              }
-          }));
-      }
+
   }
 
   getCameraOffset() {

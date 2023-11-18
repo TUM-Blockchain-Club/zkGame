@@ -24,7 +24,7 @@ server.on('connection', (ws: WebSocket) => {
     // Broadcast message to other clients
     clients.forEach(client => {
       if (client.id !== id) {
-        client.ws.send(message);
+        client.ws.send(`${message}`);
       }
     });
   });
