@@ -40,6 +40,10 @@ export class Enemy {
     }   
   }
 
+  get isVisible() {
+    return this.x !== null && this.y !== null;
+  }
+
   // Additional methods like draw, shoot, etc., can be added here
   draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
       if (this.x === null || this.y === null) return; // iff bulletX and bulletY are null

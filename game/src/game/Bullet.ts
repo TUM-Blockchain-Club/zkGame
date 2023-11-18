@@ -1,22 +1,23 @@
-import { kBulletSize } from '../utils/Constants';
+import { kBulletSize, kBulletSpeed } from '../utils/Constants';
 import { Map } from './Map';
+import { Enemy } from './Enemy';
 import { Direction } from './Game';
 
 export class Bullet {
   x: number;
   y: number;
-  speed: number;
   direction: Direction;
+  friendly: boolean;
   distanceTraveled: number = 0;
 
-  constructor(x: number, y: number, speed: number, direction: Direction) {
+  constructor(x: number, y: number, direction: Direction, friendly: boolean) {
       this.x = x;
       this.y = y;
-      this.speed = speed;
       this.direction = direction;
+      this.friendly = friendly;
   }
 
-  isColliding(map: Map): boolean {
+  isCollidingWithMap(map: Map): boolean {
     // Check map boundaries
     if (this.x < 0 || this.y < 0 || this.x + 5 > map.width * 20 || this.y + 5 > map.height * 20) {
         return true;
@@ -33,23 +34,32 @@ export class Bullet {
     return false;
   }
 
+  isCollidingWithPlayer(x: number, y: number): boolean {
+    if (this.x < x + 20 && this.x + 5 > x &&
+        this.y < y + 20 && this.y + 5 > y) {
+        return true;
+    }
+
+    return false;
+  }
+
   update() {
       // Update the projectile's position based on its direction
       switch(this.direction) {
           case Direction.Up:
-              this.y -= this.speed;
+              this.y -= kBulletSpeed;
               break;
           case Direction.Down:
-              this.y += this.speed;
+              this.y += kBulletSpeed;
               break;
           case Direction.Left:
-              this.x -= this.speed;
+              this.x -= kBulletSpeed;
               break;
           case Direction.Right:
-              this.x += this.speed;
+              this.x += kBulletSpeed;
               break;
       }
-      this.distanceTraveled += this.speed;
+      this.distanceTraveled += kBulletSpeed;
   }
 
   draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
