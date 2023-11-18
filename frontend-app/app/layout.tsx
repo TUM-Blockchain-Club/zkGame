@@ -7,9 +7,10 @@ import { Providers } from "./components/Providers";
 import { Header } from "./components/Header";
 import { ToastContainer } from "react-toastify";
 
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title: "zKGame",
+  title: "Pepe's Party Computation",
   description:
     "zkGame front-end",
 };
