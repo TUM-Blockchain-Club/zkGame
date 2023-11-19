@@ -91,49 +91,54 @@ export class Player {
         this.direction = Direction.Down;
     }
 
-    draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
-        const centerX = this.x - offsetX + kPlayerSize / 2;
-        const centerY = this.y - offsetY + kPlayerSize / 2;
-    
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, kVisibleDistance, 0, 2 * Math.PI);
-        ctx.fill();
-    
-        const scaledWidth = kPlayerSize * 2;
-        const scaledHeight = kPlayerSize * 2;
-    
-        // Save the current context
-        ctx.save();
-    
-        // Translate to the player's center
-        ctx.translate(centerX, centerY);
-    
-        // Determine if we need to mirror the image
-        if (this.direction === Direction.Left) {
-            ctx.scale(-1, 1); // Mirror the image
+        draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
+            const centerX = this.x - offsetX + kPlayerSize / 2;
+            const centerY = this.y - offsetY + kPlayerSize / 2;
+        
+            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, kVisibleDistance);
+            gradient.addColorStop(0, 'rgba(135, 92, 53, 0.6)'); // Fully opaque at the center
+            gradient.addColorStop(0.9, 'rgba(135, 92, 53, 0.6)'); // Still opaque until 80% of the radius
+            gradient.addColorStop(1, 'rgba(135, 92, 53, 0)')
+        
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, kVisibleDistance, 0, 2 * Math.PI);
+            ctx.fill();
+            // ctx.fillStyle = 'rgba(135, 92, 53,0.2)';
+            // ctx.beginPath();
+            // ctx.arc(centerX, centerY, kVisibleDistance, 0, 2 * Math.PI);
+            // ctx.fill();
+        
+            const scaledWidth = kPlayerSize * 2;
+            const scaledHeight = kPlayerSize * 2;
+        
+            // Save the current context
+            ctx.save();
+        
+            // Translate to the player's center
+            ctx.translate(centerX, centerY);
+        
+            // Determine if we need to mirror the image
+            if (this.direction === Direction.Left) {
+                ctx.scale(-1, 1); // Mirror the image
+            }
+        
+            // Rotate the context
+            ctx.rotate(this.getRotationAngle());
+        
+            // Draw the image centered
+            if (this.playerImage.complete) {
+                ctx.drawImage(this.playerImage, -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight);
+            } else {
+                this.playerImage.onload = () => {
+                    ctx.drawImage(this.playerImage, -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight);
+                }
+            }
+        
+            // Restore the context
+            ctx.restore();
+
         }
-    
-        // Rotate the context
-        ctx.rotate(this.getRotationAngle());
-    
-        // Draw the image centered
-        if (this.playerImage.complete) {
-            ctx.drawImage(this.playerImage, -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight); // Adjust width and height as needed
-        } else {
-            this.playerImage.onload = () => {
-                ctx.drawImage(this.playerImage, -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight); // Adjust width and height as needed
-            };
-        }
-    
-        // Restore the context
-        ctx.restore();
-    
-        // Drawing the direction indicator (a small dot)
-        ctx.beginPath();
-        ctx.arc(this.bulletX - offsetX + kBulletSize / 2, this.bulletY - offsetY + kBulletSize / 2, 2, 0, 2 * Math.PI);
-        ctx.fill();
-    }
     
     // Helper method to get the rotation angle based on the direction
     getRotationAngle() {

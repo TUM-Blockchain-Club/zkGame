@@ -62,7 +62,7 @@ export class Bullet {
   }
 
   draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'white';
     ctx.beginPath();
     ctx.arc(this.x - offsetX + kBulletSize / 2, this.y - offsetY + kBulletSize / 2, kBulletSize / 2, 0, 2 * Math.PI);
     ctx.fill();
