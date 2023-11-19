@@ -21,9 +21,7 @@ export class Map {
 
     // Method to draw the map and obstacles
     draw(ctx: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
-        //   ctx.fillStyle = 'green';
         this.obstacles.forEach(obstacle => {
-            //   ctx.fillRect(obstacle.x * kGridSize - offsetX, obstacle.y * kGridSize - offsetY, kObstacleSize, kObstacleSize);
             const x = obstacle.x * kGridSize - offsetX;
             const y = obstacle.y * kGridSize - offsetY;
             if (this.obstacleImage.complete) {

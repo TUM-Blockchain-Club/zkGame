@@ -62,7 +62,7 @@ const useGreeting = ({
     watch: true,
   }) as { data: string | null; isLoading: boolean; isError: boolean };
 
-
+  
   const stakeAmount = BigInt("10000000000000000"); // Convert the string to a bigint
 
   const { config, isError: prepareSetGreetingError } = usePrepareContractWrite({
@@ -72,6 +72,14 @@ const useGreeting = ({
     functionName: "enterGame",
     value: BigInt(stakeAmount), // Convert the string to a bigint
   });
+
+  // const { config, isError: prepareSetGreetingError } = usePrepareContractWrite({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
+  //   chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? "31337"),
+  //   abi,
+  //   functionName: "declareWinner",
+  //   args: [address], // Address of the winner
+  // });
 
   const {
     data,

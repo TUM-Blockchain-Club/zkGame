@@ -9,7 +9,9 @@ const GameCanvas = () => {
   useEffect(() => {
     if (canvasRef.current) {
       const game = new Game(canvasRef.current);
-      game.run();
+      game.run(() => {
+        
+      });
       
       // Optional: Cleanup function
       return () => game.stop(); // TODO: implement this stop method

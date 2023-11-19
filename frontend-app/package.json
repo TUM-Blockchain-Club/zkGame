@@ -13,6 +13,11 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@noir-lang/backend_barretenberg": "^0.19.2",
+    "@noir-lang/noir_js": "^0.19.2",
+    "@noir-lang/noir_wasm": "^0.19.2",
+    "@noir-lang/source-resolver": "^0.19.2",
+    "@noir-lang/types": "^0.19.2",
     "@rainbow-me/rainbowkit": "^1.0.11",
     "@types/node": "20.6.3",
     "@types/react": "18.2.22",

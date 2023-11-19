@@ -97,8 +97,8 @@ export class Player {
         
             const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, kVisibleDistance);
             gradient.addColorStop(0, 'rgba(135, 92, 53, 0.6)'); // Fully opaque at the center
-    gradient.addColorStop(0.9, 'rgba(135, 92, 53, 0.6)'); // Still opaque until 80% of the radius
-    gradient.addColorStop(1, 'rgba(135, 92, 53, 0)')
+            gradient.addColorStop(0.9, 'rgba(135, 92, 53, 0.6)'); // Still opaque until 80% of the radius
+            gradient.addColorStop(1, 'rgba(135, 92, 53, 0)')
         
             ctx.fillStyle = gradient;
             ctx.beginPath();

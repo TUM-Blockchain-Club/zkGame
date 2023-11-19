@@ -54,6 +54,8 @@ contract Game {
             "Winner must be a player in the game"
         );
 
+        // TODO: Call to Verifier.verify() to prove state transition history
+
         payable(winner).transfer(totalStake);
 
         // Reset the game

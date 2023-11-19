@@ -5,6 +5,7 @@ import { Bullet } from './Bullet';
 import { Map } from './Map';
 import { handleKeyboardInput } from '../utils/Keyboard';
 import { kBulletMaxDistance, kGridSize, kVisibleDistance } from '../utils/Constants';
+import { on } from 'events';
 
 export enum Direction {
   Up,
@@ -26,6 +27,7 @@ export class Game {
 
   private webSocket: WebSocket;
   private animationFrameId: number = 0;
+  private onGameOver: () => void = () => { };
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -167,13 +169,17 @@ export class Game {
     this.map.draw(this.ctx, offsetX, offsetY);
   }
 
-  run() {
+  run(onGameOver?: () => void) {
+    if (onGameOver) {
+      this.onGameOver = onGameOver;
+    }
     this.update();
     this.draw();
     this.animationFrameId = requestAnimationFrame(() => this.run());
   }
 
   stop() {
+    this.onGameOver();
     this.webSocket.close();
     cancelAnimationFrame(this.animationFrameId);
   }

@@ -1,0 +1,12 @@
+hash = ""
+prev_hash = ""
+
+[prev_state]
+dir = ""
+x = ""
+y = ""
+
+[state]
+dir = ""
+x = ""
+y = ""

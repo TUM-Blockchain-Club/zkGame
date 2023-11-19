@@ -1,0 +1,7 @@
+[package]
+name = "state_transition_recursive"
+type = "bin"
+authors = [""]
+compiler_version = ">=0.19.2"
+
+[dependencies]

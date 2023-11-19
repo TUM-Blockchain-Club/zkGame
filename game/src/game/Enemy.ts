@@ -86,6 +86,7 @@ export class Enemy {
         // Restore the context
         ctx.restore();
     }
+
     getRotationAngle() {
         switch (this.direction) {
             case Direction.Up:

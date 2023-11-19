@@ -1,5 +1,5 @@
 [package]
-name = "circuits"
+name = "state_transition"
 type = "bin"
 authors = [""]
 compiler_version = ">=0.19.2"
