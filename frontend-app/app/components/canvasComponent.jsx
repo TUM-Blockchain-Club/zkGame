@@ -29,7 +29,7 @@ function CanvasComponent() {
         <canvas 
             ref={canvasRef} 
             id="gameCanvas" 
-            style={{ border: '1px solid black' , margin: 'auto'}} // Inline CSS for border
+            style={{ border: '5px solid #22C55E' , margin: 'auto'}} // Inline CSS for border
         ></canvas>
     );}
 

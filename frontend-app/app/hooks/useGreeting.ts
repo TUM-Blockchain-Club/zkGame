@@ -8,7 +8,7 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import abi from "../abi/greeter.json";
+import abi from "../abi/game.json";
 
 const useGreeting = ({
   newGreeting,
@@ -18,7 +18,7 @@ const useGreeting = ({
   onSetGreetingSuccess?: () => void;
 }): {
   address: `0x${string}` | undefined;
-  greeting: string | null;
+  greeting: number | null;
   getGreetingLoading: boolean;
   getGreetingError: boolean;
   setGreeting: (() => void) | undefined;
@@ -29,7 +29,7 @@ const useGreeting = ({
   // This pattern prevents Next.js server side hydration mismatch errors
   const [state, setState] = useState<{
     address: `0x${string}` | undefined;
-    greeting: string | null;
+    greeting: number | null;
     getGreetingLoading: boolean;
     getGreetingError: boolean;
     setGreeting: (() => void) | undefined;
@@ -38,7 +38,7 @@ const useGreeting = ({
     setGreetingError: boolean;
   }>({
     address: undefined,
-    greeting: ``,
+    greeting: 0,
     getGreetingLoading: true,
     getGreetingError: false,
     setGreeting: undefined,
@@ -58,16 +58,19 @@ const useGreeting = ({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? "31337"),
     abi,
-    functionName: "getGreeting",
+    functionName: "getNumberOfPlayers",
     watch: true,
-  }) as { data: string | null; isLoading: boolean; isError: boolean };
+  }) as { data: number | null; isLoading: boolean; isError: boolean };
+
+
+  const stakeAmount = BigInt("10000000000000000"); // Convert the string to a bigint
 
   const { config, isError: prepareSetGreetingError } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
     chainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? "31337"),
     abi,
-    functionName: "setGreeting",
-    args: [newGreeting],
+    functionName: "enterGame",
+    value: BigInt(stakeAmount), // Convert the string to a bigint
   });
 
   const {

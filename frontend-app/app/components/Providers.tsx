@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { getDefaultWallets, RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { hardhat, goerli, sepolia} from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
@@ -31,7 +31,12 @@ const config = createConfig({
 
 const Providers = ({ children }: { children: ReactNode }) => (
   <WagmiConfig config={config}>
-    <RainbowKitProvider chains={chains}>{children}</RainbowKitProvider>
+    <RainbowKitProvider chains={chains}theme={darkTheme({
+      accentColor: '#22c55e',
+      accentColorForeground: 'white',
+      fontStack: 'rounded',
+      overlayBlur: 'small',
+    })}>{children}</RainbowKitProvider>
   </WagmiConfig>
 );
 

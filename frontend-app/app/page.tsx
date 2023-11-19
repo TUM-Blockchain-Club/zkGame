@@ -1,6 +1,6 @@
 import { Wrapper } from "./components/Wrapper";
 import { Greeting } from "./components/Greeting";
-import CanvasComponent from './components/canvasComponent'; 
+import CanvasComponent from './components/canvasComponent';
 
 const Home = () => {
   const backgroundStyle = {
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <main>
       <Wrapper>
-      {/* <Greeting /> */}
+        <Greeting />
         <CanvasComponent />
       </Wrapper>
     </main>
