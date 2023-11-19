@@ -120,8 +120,6 @@ export class Game {
     // Update game state, if needed
     this.bullets.forEach(bullet => bullet.update()); // Update all bullets
     this.bullets.filter(bullet => bullet.friendly).forEach(bullet => {
-      console.log(`Bullet at ${bullet.x}, ${bullet.y}`);
-      console.log(`Enemy at ${this.enemy.x} ${this.enemy.y}`);
       if (this.enemy.isVisible && bullet.isCollidingWithPlayer(this.enemy.x!, this.enemy.y!)) {
         console.log('Enemy hit!');
         this.bullets = this.bullets.filter(b => b !== bullet);
@@ -130,8 +128,6 @@ export class Game {
       }
     });
     this.bullets.filter(bullet => !bullet.friendly).forEach(bullet => {
-      console.log(`Bullet at ${bullet.x}, ${bullet.y}`);
-      console.log(`Player at ${this.player.x} ${this.player.y}`);
       if (bullet.isCollidingWithPlayer(this.player.x, this.player.y)) {
         console.log('You are hit!');
         this.bullets = this.bullets.filter(b => b !== bullet);
