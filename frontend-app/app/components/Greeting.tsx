@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { useGreeting } from "../hooks/useGreeting";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
-import { use } from "chai";
 
 const Greeting = () => {
   const [newGreeting, setNewGreeting] = useState<string>("");
@@ -37,10 +36,9 @@ const Greeting = () => {
 
   useEffect(() => {
     if (!address) {
-      setNewGreeting(0);
+      setNewGreeting("");
     }
   }, [address]);
-
 
   const { openConnectModal } = useConnectModal();
 
@@ -60,7 +58,10 @@ const Greeting = () => {
                 : `text-lg text-center text-red-500 font-minecraft tracking-widest`
             }
           >
-              {greeting}
+
+            {!getGreetingError
+              ? greeting
+              : `There was an error getting the data!!!!`}
           </p>
         )}
       </div>

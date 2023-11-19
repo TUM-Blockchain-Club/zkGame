@@ -18,7 +18,7 @@ const useGreeting = ({
   onSetGreetingSuccess?: () => void;
 }): {
   address: `0x${string}` | undefined;
-  greeting: number | null;
+  greeting: string | null;
   getGreetingLoading: boolean;
   getGreetingError: boolean;
   setGreeting: (() => void) | undefined;
@@ -29,7 +29,7 @@ const useGreeting = ({
   // This pattern prevents Next.js server side hydration mismatch errors
   const [state, setState] = useState<{
     address: `0x${string}` | undefined;
-    greeting: number | null;
+    greeting: string | null;
     getGreetingLoading: boolean;
     getGreetingError: boolean;
     setGreeting: (() => void) | undefined;
@@ -38,7 +38,7 @@ const useGreeting = ({
     setGreetingError: boolean;
   }>({
     address: undefined,
-    greeting: 0,
+    greeting: ``,
     getGreetingLoading: true,
     getGreetingError: false,
     setGreeting: undefined,
@@ -60,7 +60,7 @@ const useGreeting = ({
     abi,
     functionName: "getNumberOfPlayers",
     watch: true,
-  }) as { data: number | null; isLoading: boolean; isError: boolean };
+  }) as { data: string | null; isLoading: boolean; isError: boolean };
 
 
   const stakeAmount = BigInt("10000000000000000"); // Convert the string to a bigint

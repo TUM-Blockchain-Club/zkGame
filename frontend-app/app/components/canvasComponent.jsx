@@ -16,7 +16,7 @@ function CanvasComponent() {
         // Optional: Any additional setup for the canvas can go here
         const canvas = canvasRef.current;
         // For example, setting the canvas size
-        canvas.width = 800; // Set your desired width
+        canvas.width = 600; // Set your desired width
         canvas.height = 600; // Set your desired height
 
         // Clean up
