@@ -11,14 +11,13 @@ import { ToastContainer } from "react-toastify";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Pepe's Party Computation",
-  description:
-    "zkGame front-end",
+  description: "Next.js App for Pepe's Party Computation",
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   return (
     <html lang="en">
