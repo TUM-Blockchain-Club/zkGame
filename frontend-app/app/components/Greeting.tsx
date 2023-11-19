@@ -44,7 +44,7 @@ const Greeting = () => {
 
   return (
     <div className="space-y-2">
-      <div className="flex flex-col space-y-2">
+      {/* <div className="flex flex-col space-y-2">
         <p className="text-sm text-gray-500 text-center font-minecraft tracking-widest">
           Players Online
         </p>
@@ -64,7 +64,7 @@ const Greeting = () => {
               : `There was an error getting the data!!!!`}
           </p>
         )}
-      </div>
+      </div> */}
       <div className="space-y-8 mb-4">
         <div className="flex flex-col space-y-4">
           {/* <input
