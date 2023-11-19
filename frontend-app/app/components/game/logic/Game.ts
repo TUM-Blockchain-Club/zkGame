@@ -4,7 +4,7 @@ import { Enemy } from './Enemy';
 import { Bullet } from './Bullet';
 import { Map } from './Map';
 import { handleKeyboardInput } from '../utils/Keyboard';
-import { kBulletMaxDistance, kGridSize } from '../utils/Constants';
+import { kBulletMaxDistance, kGridSize, kVisibleDistance } from '../utils/Constants';
 
 export enum Direction {
   Up,
@@ -94,6 +94,7 @@ export class Game {
     } else {
       // Remaining keyboard input (movement)
       handleKeyboardInput(event, this.map, this.player);
+
       // Send message to server
       if (this.webSocket.readyState === WebSocket.OPEN) {
         const msg = JSON.stringify({
@@ -156,7 +157,12 @@ export class Game {
 
     // Draw player, bulltets, and map with offset
     this.player.draw(this.ctx, offsetX, offsetY);
-    this.enemy.draw(this.ctx, offsetX, offsetY);
+    if (this.enemy.isVisible) {
+      const dist = Math.sqrt(Math.pow(this.player.x - this.enemy.x!, 2) + Math.pow(this.player.y - this.enemy.y!, 2));
+      if (dist <= kVisibleDistance) {
+        this.enemy.draw(this.ctx, offsetX, offsetY);
+      }
+    }
     this.bullets.forEach(bullet => bullet.draw(this.ctx, offsetX, offsetY));
     this.map.draw(this.ctx, offsetX, offsetY);
   }
